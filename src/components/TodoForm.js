@@ -1,18 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Col, Form, Row } from 'react-bootstrap';
-import { useRouter } from 'next/navigation';
 import { createTodo, updateTodo } from '../api/todos';
+import { useAuth } from '../utils/context/authContext';
 
 const initialState = {
-  title: '',
   description: '',
   isComplete: false,
+  createdAt: null,
 };
 
-export default function TodoForm({ todoObj }) {
+export default function TodoForm({ todoObj = initialState, onUpdate }) {
   const [formInput, setFormInput] = useState(initialState);
-  const router = useRouter();
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (todoObj.firebaseKey) {
+      setFormInput(todoObj);
+    } else {
+      setFormInput(initialState);
+    }
+  }, [todoObj]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,13 +33,16 @@ export default function TodoForm({ todoObj }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (todoObj.firebaseKey) {
-      updateTodo(formInput).then(() => router.push('/'));
+      updateTodo(formInput).then(() => {
+        onUpdate();
+      });
     } else {
-      const payload = { ...formInput };
+      const payload = { ...formInput, uid: user.uid, createdAt: new Date() };
       createTodo(payload).then(({ name }) => {
         const patchPayload = { firebaseKey: name };
         updateTodo(patchPayload).then(() => {
-          router.push('/');
+          setFormInput(initialState);
+          onUpdate();
         });
       });
     }
@@ -44,7 +55,9 @@ export default function TodoForm({ todoObj }) {
           <Form.Control type="text" placeholder="What's next?" name="description" value={formInput.description} onChange={handleChange} required />
         </Col>
         <Col xs="auto">
-          <Button type="submit">{todoObj.firebaseKey ? 'Update' : 'Add'} todo</Button>
+          <Button type="submit" variant="primary">
+            {todoObj.firebaseKey ? 'Update' : 'Add'}
+          </Button>
         </Col>
       </Row>
     </Form>
@@ -53,13 +66,9 @@ export default function TodoForm({ todoObj }) {
 
 TodoForm.propTypes = {
   todoObj: PropTypes.shape({
-    title: PropTypes.string,
     description: PropTypes.string,
     isComplete: PropTypes.bool,
     firebaseKey: PropTypes.string,
   }),
-};
-
-TodoForm.defaultProps = {
-  todoObj: initialState,
+  onUpdate: PropTypes.func.isRequired,
 };
