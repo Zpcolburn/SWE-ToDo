@@ -15,11 +15,7 @@ export default function TodoForm({ todoObj = initialState, onUpdate }) {
   const { user } = useAuth();
 
   useEffect(() => {
-    if (todoObj.firebaseKey) {
-      setFormInput(todoObj);
-    } else {
-      setFormInput(initialState);
-    }
+    setFormInput(initialState);
   }, [todoObj]);
 
   const handleChange = (e) => {
@@ -32,20 +28,14 @@ export default function TodoForm({ todoObj = initialState, onUpdate }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (todoObj.firebaseKey) {
-      updateTodo(formInput).then(() => {
+    const payload = { ...formInput, uid: user.uid, createdAt: new Date() };
+    createTodo(payload).then(({ name }) => {
+      const patchPayload = { firebaseKey: name };
+      updateTodo(patchPayload).then(() => {
+        setFormInput(initialState);
         onUpdate();
       });
-    } else {
-      const payload = { ...formInput, uid: user.uid, createdAt: new Date() };
-      createTodo(payload).then(({ name }) => {
-        const patchPayload = { firebaseKey: name };
-        updateTodo(patchPayload).then(() => {
-          setFormInput(initialState);
-          onUpdate();
-        });
-      });
-    }
+    });
   };
 
   return (
@@ -56,7 +46,7 @@ export default function TodoForm({ todoObj = initialState, onUpdate }) {
         </Col>
         <Col xs="auto">
           <Button type="submit" variant="primary">
-            {todoObj.firebaseKey ? 'Update' : 'Add'}
+            Add
           </Button>
         </Col>
       </Row>

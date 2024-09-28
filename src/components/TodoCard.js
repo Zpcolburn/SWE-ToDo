@@ -13,7 +13,7 @@ export default function TodoCard({ todoObj, onUpdate }) {
     }
   };
 
-  const toggleComplete = () => {
+  const handleClick = () => {
     const updatedTodo = { ...todoObj, isComplete: !todoObj.isComplete };
     updateTodo(updatedTodo).then(() => onUpdate());
   };
@@ -31,7 +31,7 @@ export default function TodoCard({ todoObj, onUpdate }) {
       <Card.Body>
         {editMode ? <Form.Control type="text" value={newDescription} onChange={(e) => setNewDescription(e.target.value)} className="mb-2" /> : <Card.Title>{todoObj.description}</Card.Title>}
 
-        <Button variant={todoObj.isComplete ? 'success' : 'warning'} className="me-2" onClick={toggleComplete}>
+        <Button variant={todoObj.isComplete ? 'success' : 'warning'} className="me-2" onClick={handleClick}>
           {todoObj.isComplete ? '✅ Completed' : '✔ Mark as Complete'}
         </Button>
 
