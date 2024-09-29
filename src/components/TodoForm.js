@@ -7,7 +7,6 @@ import { useAuth } from '../utils/context/authContext';
 const initialState = {
   description: '',
   isComplete: false,
-  createdAt: null,
 };
 
 export default function TodoForm({ todoObj = initialState, onUpdate }) {
