@@ -19,7 +19,7 @@
 //   }, [todoObj]);
 
 //   const handleChange = (e) => {
-//     // TODO: <ake a handleChange event.
+//     // TODO: Make a handleChange event.
 //   };
 
 //   const handleSubmit = (e) => {
