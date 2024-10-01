@@ -40,11 +40,11 @@ export default function TodoForm({ todoObj = initialState, onUpdate }) {
   return (
     <Form onSubmit={handleSubmit}>
       <Row className="align-items-center">
-        <Col xs="auto">
-          <Form.Control type="text" placeholder="What's next?" name="description" value={formInput.description} onChange={handleChange} required />
+        <Col xs={10}>
+          <Form.Control type="text" placeholder="What's next?" name="description" value={formInput.description} onChange={handleChange} required style={{ width: '100%' }} />
         </Col>
-        <Col xs="auto">
-          <Button type="submit" variant="primary">
+        <Col xs={2}>
+          <Button type="submit" variant="primary" className="w-100">
             Add
           </Button>
         </Col>

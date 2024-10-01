@@ -8,7 +8,7 @@ export default function TodoCard({ todoObj, onUpdate }) {
   const [newDescription, setNewDescription] = useState(todoObj.description);
 
   const deleteThisTodo = () => {
-    if (window.confirm(`Delete ${todoObj.description}?`)) {
+    if (window.confirm(`Delete "${todoObj.description}"?`)) {
       deleteTodo(todoObj.firebaseKey).then(() => onUpdate());
     }
   };
@@ -30,30 +30,30 @@ export default function TodoCard({ todoObj, onUpdate }) {
     <Card bg="dark" text="light" className="mb-2">
       <Card.Body>
         {editMode ? <Form.Control type="text" value={newDescription} onChange={(e) => setNewDescription(e.target.value)} className="mb-2" /> : <Card.Title>{todoObj.description}</Card.Title>}
-
-        <Button variant={todoObj.isComplete ? 'success' : 'warning'} className="me-2" onClick={handleClick}>
-          {todoObj.isComplete ? '✅ Completed' : '✔ Mark as Complete'}
-        </Button>
-
-        {editMode ? (
-          <>
-            <Button variant="success" className="me-2" onClick={handleSave}>
-              💾 Save
-            </Button>
-            <Button variant="secondary" onClick={() => setEditMode(false)}>
-              ❌ Cancel
-            </Button>
-          </>
-        ) : (
-          <>
-            <Button variant="info" className="me-2" onClick={() => setEditMode(true)}>
-              🖊 Edit
-            </Button>
-            <Button variant="danger" onClick={deleteThisTodo}>
-              ❌ Delete
-            </Button>
-          </>
-        )}
+        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '0.5rem' }}>
+          <Button variant={todoObj.isComplete ? 'success' : 'warning'} onClick={handleClick} style={{ flex: 1 }}>
+            {todoObj.isComplete ? '✅ Complete' : '⬜ Incomplete'}
+          </Button>
+          {editMode ? (
+            <>
+              <Button variant="success" onClick={handleSave} style={{ flex: 1 }}>
+                💾 Save
+              </Button>
+              <Button variant="secondary" onClick={() => setEditMode(false)} style={{ flex: 1 }}>
+                ❌ Cancel
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button variant="info" onClick={() => setEditMode(true)} style={{ flex: 1 }}>
+                📝 Edit
+              </Button>
+              <Button variant="danger" onClick={deleteThisTodo} style={{ flex: 1 }}>
+                ✖ Delete
+              </Button>
+            </>
+          )}
+        </div>
       </Card.Body>
     </Card>
   );
