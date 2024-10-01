@@ -7,7 +7,6 @@
 // const initialState = {
 //   description: '',
 //   isComplete: false,
-//   createdAt: null,
 // };
 
 // export default function TodoForm({ todoObj = initialState, onUpdate }) {
@@ -18,19 +17,13 @@
 //     setFormInput(initialState);
 //   }, [todoObj]);
 
-//   const handleChange = (e) => {
-//     // TODO: Make a handleChange event.
-//   };
+//   // TODO: create a handleChange function that logs user input
 
-//   const handleSubmit = (e) => {
-//    // TODO: Make a handleSubmit event.
-//   };
+//   // TODO: create a handleSubmit function that takes the user input and creates a new todo
 
+//   // TODO: create a form with an input field and a button to add new todos to the list
 //   return (
-//   // TODO: Create a input field and a button to add new items to the list and to submit the item.
-//     <Form onSubmit={}>
 
-//     </Form>
 //   );
 // }
 
