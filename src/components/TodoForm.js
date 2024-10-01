@@ -16,19 +16,19 @@
 //     setFormInput(initialState);
 //   }, [todoObj]);
 
-//   // TODO: create a handleChange handler function that logs user input changes
+//   // TODO: create an event handler handler function that captures user input changes
 
-//   // TODO: create a handleSubmit handler function that takes user input and creates new todo on form submission
+//   // TODO: create an event handler function that takes user input and creates a new todo on form submission
 
 //   // TODO: create a form with an input field and a button to add new todos to the list
 //   return (
 //     <Form>
 //       <Row className="align-items-center">
-//         <Col xs="auto">
-//           <Form.Control />
+//         <Col xs={10}>
+//           <Form.Control style={{ width: '100%' }} />
 //         </Col>
-//         <Col xs="auto">
-//           <Button variant="primary">
+//         <Col xs={2}>
+//           <Button variant="primary" className="w-100">
 //             Add
 //           </Button>
 //         </Col>
